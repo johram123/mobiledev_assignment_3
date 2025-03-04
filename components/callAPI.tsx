@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
 
 type DateProps = {
-    day: number;
-    month: number;
+    day: string;
+    month: string;
 }
 
 const CallAPI = ({month, day} : DateProps) => {
@@ -34,7 +34,7 @@ const CallAPI = ({month, day} : DateProps) => {
         catch (error)
         {
             setError(error as Error);
-
+            
         }
         finally 
         {

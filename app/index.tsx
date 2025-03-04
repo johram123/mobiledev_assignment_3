@@ -1,19 +1,23 @@
-import { View, Text, TouchableOpacity, Button, StyleSheet } from "react-native";
+import { View, Text, TouchableOpacity, Button, StyleSheet, TextInput } from "react-native";
 import { useEffect, useState } from "react";
 import { CallAPI } from "../components/callAPI";
 
 
-const Lab5 = () => {
+export default function App() {
+    const [month, setMonth] = useState<string>("");
+    const [day, setDay] = useState<string>("");
+    
 
-    useEffect(() => {
-        <CallAPI month= {month} day= {day} />
-    }, [month, day]);
 
     return (
         <View style={styles.container}>
-            <Text style={styles.header}>Lab 5</Text>
-            
-        </View>
+            <Text style={styles.header}>Assignment 3</Text>
+
+            <CallAPI month={month} day={day} />
+
+            <TextInput style={styles.TextInput} value={month} onChangeText={setMonth} placeholder="Enter Month" /> 
+            <TextInput style={styles.TextInput}value={day} onChangeText={setDay} placeholder="Enter Day" /> 
+        </View> 
     );
 };
 
@@ -22,7 +26,7 @@ const styles = StyleSheet.create({
         flex: 1, 
         justifyContent: "space-between",
         alignItems: "center",
-        backgroundColor: "gray",
+        
     },
     header: {
         alignItems: "center",
@@ -39,6 +43,14 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         backgroundColor: "#dfe6ef",    
     },
+    TextInput: {
+        width: 200,
+        height: 40,
+        margin: 12,
+        borderWidth: 1,
+        padding: 10,
+        borderRadius: 10,
+        backgroundColor: "#fff",
+    },
 });
 
-export default Lab5;
