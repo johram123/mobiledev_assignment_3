@@ -21,7 +21,7 @@ const CallAPI = ({month, day} : DateProps) => {
 
     useEffect(() => {
         makeAPICall();
-    }, []);
+    }, [month, day]);
 
     const makeAPICall = async () => {
         try
