@@ -1,13 +1,30 @@
-import { View, Text, TouchableOpacity, Button, StyleSheet, TextInput } from "react-native";
-import { useEffect, useState } from "react";
+import { View, Text, StyleSheet } from "react-native";
+import { useState } from "react";
 import { CallAPI } from "../components/callAPI";
-
+import { Picker } from "@react-native-picker/picker";
 
 export default function App() {
     const [month, setMonth] = useState<string>("");
     const [day, setDay] = useState<string>("");
-    
 
+    const monthsName = 
+    [
+        "January", "February", "March", 
+        "April", "May", "June",
+        "July", "August", "September", 
+        "October", "November", "December"
+    ];
+
+    const daysNum = 
+    [
+        "1", "2", "3", "4", "5", 
+        "6", "7", "8", "9", "10",
+        "11", "12", "13", "14", "15", 
+        "16", "17", "18", "19", "20",
+        "21", "22", "23", "24", "25", 
+        "26", "27", "28", "29", "30", 
+        "31"
+    ];
 
     return (
         <View style={styles.container}>
@@ -15,9 +32,34 @@ export default function App() {
 
             <CallAPI month={month} day={day} />
 
-            <TextInput style={styles.TextInput} value={month} onChangeText={setMonth} placeholder="Enter Month" /> 
-            <TextInput style={styles.TextInput}value={day} onChangeText={setDay} placeholder="Enter Day" /> 
-        </View> 
+            // Used "131 - The Picker Component in React Native" by Easy Learning
+            // as a reference for the Picker component
+            // https://www.youtube.com/watch?v=dSY6HJc7CXE
+
+            <Picker
+                selectedValue={month}
+                style={styles.picker}
+                onValueChange={(itemValue) => setMonth(itemValue)}
+            >
+                <Picker.Item label="Select a Month" value="" />
+                {monthsName.map((month, index) => 
+                (
+                    <Picker.Item key={index} label={month} value={month} />
+                ))}
+            </Picker>
+
+            <Picker
+                selectedValue={day}
+                style={styles.picker}
+                onValueChange={(itemValue) => setDay(itemValue)}
+            >
+                <Picker.Item label="Select a Day" value="" />
+                {daysNum.map((day, index) => (
+                    <Picker.Item key={index} label={day} value={day} />
+                ))}
+            </Picker>
+            
+        </View>
     );
 };
 
@@ -26,7 +68,6 @@ const styles = StyleSheet.create({
         flex: 1, 
         justifyContent: "space-between",
         alignItems: "center",
-        
     },
     header: {
         alignItems: "center",
@@ -43,14 +84,11 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         backgroundColor: "#dfe6ef",    
     },
-    TextInput: {
+    picker: {
         width: 200,
-        height: 40,
-        margin: 12,
-        borderWidth: 1,
-        padding: 10,
-        borderRadius: 10,
-        backgroundColor: "#fff",
+        height: 50,
+        backgroundColor: "lightgrey",
+        marginBottom: 20,
     },
 });
 
