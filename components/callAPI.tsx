@@ -1,16 +1,27 @@
 import { useEffect, useState } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, AppConfig } from "react-native";
 
 type DateProps = {
     day: string;
     month: string;
 }
 
+type APIResponse = {
+    text: string;
+    year: number;
+    number : number, 
+    found : boolean,
+    type: string,
+    message: string,
+}
+
+
 const CallAPI = ({month, day} : DateProps) => {
-    const [data, setData] = useState<any>(" ");
+    const [data, setData] = useState<APIResponse | null>(null);
     const [error, setError] = useState<Error | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
-    const url = `https://numbersapi.p.rapidapi.com/${month}/${day}/date`;
+    
+    const url = `https://numbersapi.p.rapidapi.com/${month}/${day}/date?json=true`;
     const options = {
 	    method: 'GET',
 	    headers: {
@@ -26,14 +37,19 @@ const CallAPI = ({month, day} : DateProps) => {
     const makeAPICall = async () => {
         try
         {
+            setError(null);
             const response = await fetch(url, options);
-            const data = await response.text();
-            console.log(data);
+            // console.log(response)
+            const data = await response.json();
+            // console.log(data);
             setData(data);
+            
         }
         catch (error)
         {
+            setData(null);
             setError(error as Error);
+            console.log(error);
             
         }
         finally 
@@ -45,8 +61,8 @@ const CallAPI = ({month, day} : DateProps) => {
     return (
         <View style={styles.container}>
             <Text>{loading && <Text>Loading...</Text>}</Text>
-            <Text>{error && <Text>{error.message}</Text>}</Text>
-            <Text>{data && data}</Text>
+            <Text>{error && <Text>Invalid Date</Text>}</Text>
+            <Text>{data && error == null && data.text}</Text>
         </View>
     )
 }
