@@ -1,10 +1,23 @@
 import { useEffect, useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
 
-const CallAPI = () => {
-    const [data, setData] = useState<any[]>([]);
+type DateProps = {
+    day: number;
+    month: number;
+}
+
+const CallAPI = ({month, day} : DateProps) => {
+    const [data, setData] = useState<any>(" ");
     const [error, setError] = useState<Error | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
+    const url = `https://numbersapi.p.rapidapi.com/${month}/${day}/date`;
+    const options = {
+	    method: 'GET',
+	    headers: {
+		    'x-rapidapi-key': 'f85f5d2000msh989b7f1920d998ep10488djsn2c43dea4b6b8',
+		    'x-rapidapi-host': 'numbersapi.p.rapidapi.com'
+	    }
+    };
 
     useEffect(() => {
         makeAPICall();
@@ -13,10 +26,10 @@ const CallAPI = () => {
     const makeAPICall = async () => {
         try
         {
-            const response = await fetch("https://jsonplaceholder.typicode.com/posts/1");
-            const data = await response.json();
+            const response = await fetch(url, options);
+            const data = await response.text();
             console.log(data);
-            setData([data]);
+            setData(data);
         }
         catch (error)
         {
@@ -33,13 +46,7 @@ const CallAPI = () => {
         <View style={styles.container}>
             <Text>{loading && <Text>Loading...</Text>}</Text>
             <Text>{error && <Text>{error.message}</Text>}</Text>
-            <View>{data && data.map((item) => (
-                <View key={item.id}>
-                    <Text style={styles.item}>Title: {"\n"}{item.title}</Text>
-                    <Text style={styles.item}>Body: {"\n"}{item.body}</Text>
-                </View>
-            ))}
-            </View>
+            <Text>{data && data}</Text>
         </View>
     )
 }
