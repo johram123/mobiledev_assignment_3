@@ -7,14 +7,20 @@ export default function App() {
     const [month, setMonth] = useState<string>("");
     const [day, setDay] = useState<string>("");
 
-    const monthsName = 
-    [
-        "January", "February", "March", 
-        "April", "May", "June",
-        "July", "August", "September", 
-        "October", "November", "December"
-    ];
-
+    const monthNames = [
+        ["1", "January"],
+        ["2", "February"],
+        ["3", "March"],
+        ["4", "April"],
+        ["5", "May"],
+        ["6", "June"],
+        ["7", "July"],
+        ["8", "August"],
+        ["9", "September"],
+        ["10", "October"],
+        ["11", "November"],
+        ["12", "December"],
+      ];
     const daysNum = 
     [
         "1", "2", "3", "4", "5", 
@@ -32,33 +38,34 @@ export default function App() {
 
             <CallAPI month={month} day={day} />
 
-            // Used "131 - The Picker Component in React Native" by Easy Learning
-            // as a reference for the Picker component
-            // https://www.youtube.com/watch?v=dSY6HJc7CXE
+            {/* Used "131 - The Picker Component in React Native" by Easy Learning
+            as a reference for the Picker component
+            https://www.youtube.com/watch?v=dSY6HJc7CXE */}
 
-            <Picker
-                selectedValue={month}
-                style={styles.picker}
-                onValueChange={(itemValue) => setMonth(itemValue)}
-            >
-                <Picker.Item label="Select a Month" value="" />
-                {monthsName.map((month, index) => 
-                (
-                    <Picker.Item key={index} label={month} value={month} />
-                ))}
-            </Picker>
+            <View style={styles.pickerContainer}>
+                <Picker
+                    selectedValue={month}
+                    style={styles.picker}
+                    onValueChange={(itemValue) => setMonth(itemValue)}
+                >
+                    <Picker.Item label="Select a Month" value="" />
+                    {monthNames.map(([key, month]) => 
+                    (
+                        <Picker.Item key={key} label={month} value={key} />
+                    ))}
+                </Picker>
 
-            <Picker
-                selectedValue={day}
-                style={styles.picker}
-                onValueChange={(itemValue) => setDay(itemValue)}
-            >
-                <Picker.Item label="Select a Day" value="" />
-                {daysNum.map((day, index) => (
-                    <Picker.Item key={index} label={day} value={day} />
-                ))}
-            </Picker>
-            
+                <Picker
+                    selectedValue={day}
+                    style={styles.picker}
+                    onValueChange={(itemValue) => setDay(itemValue)}
+                >
+                    <Picker.Item label="Select a Day" value="" />
+                    {daysNum.map((day, index) => (
+                        <Picker.Item key={index} label={day} value={day} />
+                    ))}
+                </Picker>  
+            </View>   
         </View>
     );
 };
@@ -66,7 +73,7 @@ export default function App() {
 const styles = StyleSheet.create({
     container: {    
         flex: 1, 
-        justifyContent: "space-between",
+        justifyContent: "center",
         alignItems: "center",
     },
     header: {
@@ -87,8 +94,10 @@ const styles = StyleSheet.create({
     picker: {
         width: 200,
         height: 50,
-        backgroundColor: "lightgrey",
-        marginBottom: 20,
+    },
+    pickerContainer: {
+        flexDirection: "row",
+        justifyContent:"center",
     },
 });
 

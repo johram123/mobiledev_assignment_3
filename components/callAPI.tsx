@@ -21,48 +21,7 @@ const CallAPI = ({month, day} : DateProps) => {
     const [error, setError] = useState<Error | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
 
-    let monthNumber = '';
-    switch (month.toLowerCase()) {
-        case 'january':
-            monthNumber = '1';
-            break;
-        case 'february':
-            monthNumber = '2';
-            break;
-        case 'march':
-            monthNumber = '3';
-            break;
-        case 'april':
-            monthNumber = '4';
-            break;
-        case 'may':
-            monthNumber = '5';
-            break;
-        case 'june':
-            monthNumber = '6';
-            break;
-        case 'july':
-            monthNumber = '7';
-            break;
-        case 'august':
-            monthNumber = '8';
-            break;
-        case 'september':
-            monthNumber = '9';
-            break;
-        case 'october':
-            monthNumber = '10';
-            break;
-        case 'november':
-            monthNumber = '11';
-            break;
-        case 'december':
-            monthNumber = '12';
-            break;
-    }
-
-   
-    const url = `https://numbersapi.p.rapidapi.com/${monthNumber}/${day}/date`;
+    const url = `https://numbersapi.p.rapidapi.com/${month}/${day}/date?json=true`;
     const options = {
 	    method: 'GET',
 	    headers: {
@@ -78,26 +37,19 @@ const CallAPI = ({month, day} : DateProps) => {
     const makeAPICall = async () => {
         try 
         {
-            setError(null);
             const response = await fetch(url, options);
-            // console.log(response)
             const data = await response.json();
-            // console.log(data);
             setData(data);
-            
         }
         catch (error)
         {
-            setData(null);
             setError(error as Error);
-            console.log(error);
-            
         }
         finally 
         {
             setLoading(false);
         }
-    }
+    };
 
     return (
         <View style={styles.container}>
