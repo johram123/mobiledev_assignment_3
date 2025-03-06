@@ -34,37 +34,41 @@ export default function App() {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.header}>Assignment 3</Text>
+            <Text style={styles.header}>Assignment 3: Interesting Facts</Text>
 
-            <CallAPI month={month} day={day} />
+            <View style={styles.content}>
+                <View style={styles.apiComponent}>
+                    <View style={styles.apiTextContainer}>
+                        <CallAPI month={month} day={day} />
+                    </View>
+                </View>
 
-            {/* Used "131 - The Picker Component in React Native" by Easy Learning
-            as a reference for the Picker component
-            https://www.youtube.com/watch?v=dSY6HJc7CXE */}
+                {/* Used "131 - The Picker Component in React Native" by Easy Learning as a reference for the Picker component https://www.youtube.com/watch?v=dSY6HJc7CXE */}
 
-            <View style={styles.pickerContainer}>
-                <Picker
-                    selectedValue={month}
-                    style={styles.picker}
-                    onValueChange={(itemValue) => setMonth(itemValue)}
-                >
-                    <Picker.Item label="Select a Month" value="" />
-                    {monthNames.map(([key, month]) => 
-                    (
-                        <Picker.Item key={key} label={month} value={key} />
-                    ))}
-                </Picker>
+                <View style={styles.pickerContainer}>
+                    <Picker
+                        selectedValue={month}
+                        style={styles.picker}
+                        onValueChange={(itemValue) => setMonth(itemValue)}
+                    >
+                        <Picker.Item label="Select a Month" value="" />
+                        {monthNames.map(([key, month]) => 
+                        (
+                            <Picker.Item key={key} label={month} value={key} />
+                        ))}
+                    </Picker>
 
-                <Picker
-                    selectedValue={day}
-                    style={styles.picker}
-                    onValueChange={(itemValue) => setDay(itemValue)}
-                >
-                    <Picker.Item label="Select a Day" value="" />
-                    {daysNum.map((day, index) => (
-                        <Picker.Item key={index} label={day} value={day} />
-                    ))}
-                </Picker>  
+                    <Picker
+                        selectedValue={day}
+                        style={styles.picker}
+                        onValueChange={(itemValue) => setDay(itemValue)}
+                    >
+                        <Picker.Item label="Select a Day" value="" />
+                        {daysNum.map((day, index) => (
+                            <Picker.Item key={index} label={day} value={day} />
+                        ))}
+                    </Picker>  
+                </View>
             </View>   
         </View>
     );
@@ -77,27 +81,42 @@ const styles = StyleSheet.create({
         alignItems: "center",
     },
     header: {
-        alignItems: "center",
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        textAlign: 'center',
         fontSize: 20,
         fontWeight: "bold",
+        paddingVertical: 10,
+        backgroundColor: '#fff', 
+        zIndex: 1,
     },
-    apiComponent: {
+    content: {
+        justifyContent: "center",
         alignItems: "center",
-    },
-    button: {
-        padding: 10,
-        width: 120,
-        alignItems: "center",
-        borderRadius: 10,
-        backgroundColor: "#dfe6ef",    
-    },
-    picker: {
-        width: 200,
-        height: 50,
     },
     pickerContainer: {
         flexDirection: "row",
-        justifyContent:"center",
+        justifyContent: "center",
+    },
+    picker: {
+        width: 200,
+        height: 200,
+        paddingTop: 50,
+    },
+    apiComponent: {
+        flex: 0.1,
+        justifyContent: "center",
+        alignItems: "center",
+        marginBottom: 100, 
+    },
+    apiTextContainer: {
+        backgroundColor: '#EEEEF0', // Updated to match the picker's selected color
+        borderRadius: 10,
+        padding: 10,
+        alignItems: 'center',
+        height: 200,
+        width: 300,
     },
 });
-
